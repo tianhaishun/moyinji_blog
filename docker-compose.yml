@@ -12,6 +12,16 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7-alpine
+    container_name: moyinji_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
   web:
     build: .
     command: gunicorn moyinji.wsgi:application --bind 0.0.0.0:8000 --workers 3
@@ -21,8 +31,11 @@ services:
       - media_volume:/app/media
     env_file:
       - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
     depends_on:
       - db
+      - redis
     ports:
       - "8000:8000"
 
@@ -39,5 +52,6 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:
   static_volume:
   media_volume:

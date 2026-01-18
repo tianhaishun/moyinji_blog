@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,3 +144,33 @@ REST_FRAMEWORK = {
 IMAGEKIT_CACHEFILE_DIR = 'cache'
 IMAGEKIT_DEFAULT_CACHEFILE_BACKEND = 'imagekit.cachefiles.backends.Default'
 
+
+# Redis Cache Configuration
+# 开发环境可通过环境变量 ENABLE_CACHE=False 禁用缓存
+ENABLE_CACHE = os.environ.get('ENABLE_CACHE', 'True').lower() == 'true'
+
+if ENABLE_CACHE:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get('REDIS_URL', 'redis://localhost:6379/0'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+                "IGNORE_EXCEPTIONS": True,  # 开发环境忽略 Redis 连接错误
+            },
+            "KEY_PREFIX": "moyinji",
+        }
+    }
+
+    # Session 存储到 Redis（可选，生产环境推荐）
+    if not DEBUG:
+        SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+        SESSION_CACHE_ALIAS = "default"
+else:
+    # 开发环境禁用缓存时使用内存缓存
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        }
+    }
