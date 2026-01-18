@@ -1,0 +1,253 @@
+/* ====================================
+   墨影纪 - 宋代美学样式
+   Song Dynasty Aesthetic Styles
+   ==================================== */
+
+/* ===== Base Styles ===== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== Navigation Links ===== */
+.nav-link {
+    @apply text-yaqing/80 hover:text-hupo transition-colors duration-300 relative;
+}
+
+.nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-hupo transition-all duration-300;
+}
+
+.nav-link:hover::after {
+    @apply w-full;
+}
+
+/* ===== Page Transition Animations ===== */
+@keyframes unfurl {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-unfurl {
+    animation: unfurl 0.6s ease-out;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+/* ===== Ink Wash Hover Effect ===== */
+.ink-wash-hover {
+    @apply relative overflow-hidden;
+}
+
+.ink-wash-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(60, 72, 86, 0.08) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ink-wash-hover:hover::before {
+    opacity: 1;
+}
+
+/* ===== Image Zoom Effect ===== */
+.zoom-container {
+    @apply overflow-hidden;
+}
+
+.zoom-container img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zoom-container:hover img {
+    transform: scale(1.05);
+}
+
+/* ===== Paper Texture Background ===== */
+.paper-texture {
+    background-color: #F0EFE9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ===== Film Grain Texture ===== */
+.film-grain::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    z-index: 9999;
+}
+
+/* ===== Skeleton Loading ===== */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #E8E8E8 25%, #F5F5F5 50%, #E8E8E8 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* ===== Card Styles ===== */
+.card-song {
+    @apply bg-white rounded-sm shadow-sm border border-yaqing/10 transition-all duration-300;
+}
+
+.card-song:hover {
+    @apply shadow-lg;
+    box-shadow: 0 4px 20px rgba(60, 72, 86, 0.1);
+}
+
+/* ===== Typography ===== */
+.text-display {
+    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-yaqing leading-tight;
+}
+
+.text-heading {
+    @apply text-2xl md:text-3xl font-serif text-yaqing;
+}
+
+.text-subheading {
+    @apply text-lg font-serif text-yaqing/80;
+}
+
+.text-body {
+    @apply text-base leading-relaxed text-yaqing/70;
+}
+
+.text-caption {
+    @apply text-sm text-yaqing/60;
+}
+
+/* ===== Button Styles ===== */
+.btn-song {
+    @apply px-6 py-2 border border-hupo text-hupo hover:bg-hupo hover:text-white transition-all duration-300 font-serif;
+}
+
+.btn-song-solid {
+    @apply px-6 py-2 bg-hupo text-white hover:bg-yaqing transition-all duration-300 font-serif;
+}
+
+/* ===== Pagination ===== */
+.pagination-song a,
+.pagination-song span {
+    @apply px-4 py-2 border border-yaqing/20 text-yaqing hover:border-hupo hover:text-hupo transition-all duration-300;
+}
+
+.pagination-song .current {
+    @apply bg-hupo text-white border-hupo;
+}
+
+/* ===== Tag Styles ===== */
+.tag-song {
+    @apply inline-block px-3 py-1 text-sm border border-yaqing/20 text-yaqing/70 hover:border-hupo hover:text-hupo transition-all duration-300 cursor-pointer;
+}
+
+/* ===== Seal/Stamp Style ===== */
+.seal-stamp {
+    @apply w-16 h-16 border-2 border-hupo rounded-full flex items-center justify-center text-hupo text-xs font-serif opacity-80;
+}
+
+/* ===== Divider ===== */
+.divider-song {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-yaqing/20 to-transparent my-8;
+}
+
+/* ===== Responsive Grid ===== */
+.grid-song {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+@media (max-width: 640px) {
+    .grid-song {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Waterfall/Masonry Layout ===== */
+.masonry-song {
+    column-count: 3;
+    column-gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .masonry-song {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 640px) {
+    .masonry-song {
+        column-count: 1;
+    }
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F6F8FA;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3C4856;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #B78B5D;
+}
+
+/* ===== Focus Styles ===== */
+:focus-visible {
+    @apply outline-none ring-2 ring-hupo ring-offset-2;
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    nav,
+    footer {
+        display: none;
+    }
+
+    body {
+        @apply text-black;
+    }
+}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-yuebai via-paper to-yuebai opacity-50"></div>
+    <div class="relative z-10 text-center px-6 animate-unfurl">
+        <h1 class="text-display mb-6">墨影纪</h1>
+        <p class="text-xl md:text-2xl text-yaqing/70 mb-8 font-serif">宋代美学 · 光影留痕</p>
+        <p class="text-body max-w-2xl mx-auto">捕捉光影，记录瞬间，以宋代简约雅致之美，呈现摄影艺术之韵味</p>
+        <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'gallery:list' %}" class="btn-song-solid">浏览影集</a>
+            <a href="{% url 'blog:list' %}" class="btn-song">阅读文章</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Albums -->
+{% if featured_albums %}
+<section class="py-20 px-6 bg-paper">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-heading text-center mb-12 animate-unfurl">精选影集</h2>
+        <div class="grid-song">
+            {% for album in featured_albums %}
+            <a href="{{ album.get_absolute_url }}" class="card-song overflow-hidden group">
+                {% if album.cover_photo %}
+                <div class="zoom-container aspect-square">
+                    <img src="{{ album.cover_photo.thumbnail_square.url }}"
+                         alt="{{ album.title }}"
+                         class="w-full h-full object-cover">
+                </div>
+                {% else %}
+                <div class="aspect-square bg-yaqing/10 flex items-center justify-center">
+                    <span class="text-yaqing/40 text-4xl">山水</span>
+                </div>
+                {% endif %}
+                <div class="p-6">
+                    <h3 class="text-lg font-serif text-yaqing mb-2 group-hover:text-hupo transition-colors">{{ album.title }}</h3>
+                    <p class="text-caption">{{ album.photo_count }} 张照片</p>
+                </div>
+            </a>
+            {% empty %}
+            <p class="text-yaqing/60 text-center col-span-full">暂无影集</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Latest Posts -->
+{% if latest_posts %}
+<section class="py-20 px-6 bg-yuebai">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-heading text-center mb-12 animate-unfurl">最新文章</h2>
+        <div class="grid-song">
+            {% for post in latest_posts %}
+            <article class="card-song overflow-hidden group">
+                <a href="{{ post.get_absolute_url }}" class="block">
+                    {% if post.cover_image %}
+                    <div class="zoom-container aspect-[4/3]">
+                        <img src="{{ post.cover_image.url }}"
+                             alt="{{ post.title }}"
+                             class="w-full h-full object-cover">
+                    </div>
+                    {% else %}
+                    <div class="aspect-[4/3] bg-yaqing/10 flex items-center justify-center">
+                        <span class="text-yaqing/40 text-4xl">墨</span>
+                    </div>
+                    {% endif %}
+                    <div class="p-6">
+                        <h3 class="text-lg font-serif text-yaqing mb-2 group-hover:text-hupo transition-colors">{{ post.title }}</h3>
+                        <p class="text-caption mb-4">{{ post.created_at|date:"Y年m月d日" }}</p>
+                        {% if post.excerpt %}
+                        <p class="text-body line-clamp-2">{{ post.excerpt }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </article>
+            {% empty %}
+            <p class="text-yaqing/60 text-center col-span-full">暂无文章</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-12">
+            <a href="{% url 'blog:list' %}" class="btn-song">查看全部文章</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

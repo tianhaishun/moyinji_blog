@@ -1,0 +1,17 @@
+# Django Core
+Django>=4.2
+djangorestframework>=3.14.0
+
+# Image Processing
+Pillow>=10.0.0
+django-imagekit>=5.0.0
+
+# Content Processing
+markdown>=3.5.0
+bleach>=6.0.0
+
+# Production Server
+gunicorn>=21.0.0
+
+# Development
+python-dotenv>=1.0.0

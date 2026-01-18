@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}墨影纪 - 宋代美学摄影博客{% endblock %}">
+    <title>{% block title %}墨影纪 · 宋代美学摄影博客{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yuebai': '#F6F8FA',
+                        'yaqing': '#3C4856',
+                        'hupo': '#B78B5D',
+                        'zhusha': '#D03B40',
+                        'dailan': '#2A5CAA',
+                        'paper': '#F0EFE9',
+                        'ink': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        'serif': ['Georgia', 'serif'],
+                        'song': ['"Source Han Serif SC"', '"Noto Serif SC"', 'serif'],
+                    },
+                    spacing: {
+                        'song': '5%',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/song-style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-yuebai font-song text-yaqing antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-yuebai/95 backdrop-blur-sm border-b border-yaqing/10" x-data="{ open: false }">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="{% url 'home' %}" class="text-2xl font-serif text-yaqing hover:text-hupo transition-colors duration-300">
+                    墨影纪
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'home' %}" class="nav-link">首页</a>
+                    <a href="{% url 'blog:list' %}" class="nav-link">文章</a>
+                    <a href="{% url 'gallery:list' %}" class="nav-link">影集</a>
+                    <a href="{% url 'about' %}" class="nav-link">关于</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button @click="open = !open" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div x-show="open" class="md:hidden mt-4 pb-4 space-y-2">
+                <a href="{% url 'home' %}" class="block py-2">首页</a>
+                <a href="{% url 'blog:list' %}" class="block py-2">文章</a>
+                <a href="{% url 'gallery:list' %}" class="block py-2">影集</a>
+                <a href="{% url 'about' %}" class="block py-2">关于</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16 min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-paper border-t border-yaqing/10 mt-20">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 border-2 border-hupo rounded-full flex items-center justify-center text-hupo text-sm font-serif">
+                        墨影
+                    </div>
+                    <div>
+                        <p class="text-lg font-serif">墨影纪</p>
+                        <p class="text-sm text-yaqing/70">宋代美学 · 光影留痕</p>
+                    </div>
+                </div>
+                <div class="text-yaqing/60 text-sm">
+                    &copy; <span id="year"></span> 墨影纪. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

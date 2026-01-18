@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-yuebai">
+    <!-- Header -->
+    <section class="py-16 px-6 border-b border-yaqing/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-display mb-6">影集</h1>
+            <p class="text-body max-w-2xl mx-auto">用镜头记录时光，以光影描绘心境</p>
+        </div>
+    </section>
+
+    <!-- Albums Grid -->
+    <section class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            {% if albums %}
+            <div class="masonry-song">
+                {% for album in albums %}
+                <div class="card-song overflow-hidden group animate-unfurl {% cycle 'stagger-0' 'stagger-1' 'stagger-2' 'stagger-3' %}">
+                    <a href="{{ album.get_absolute_url }}" class="block">
+                        <div class="zoom-container relative">
+                            {% if album.cover_photo and album.cover_photo.image %}
+                            <img src="{{ album.cover_photo.thumbnail_large.url }}"
+                                 alt="{{ album.title }}"
+                                 class="w-full object-cover"
+                                 loading="lazy">
+                            {% else %}
+                            <div class="aspect-square bg-yaqing/10 flex items-center justify-center">
+                                <span class="text-yaqing/40 text-4xl">山水</span>
+                            </div>
+                            {% endif %}
+                            <div class="absolute inset-0 bg-gradient-to-t from-yaqing/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif text-yaqing mb-2 group-hover:text-hupo transition-colors">
+                                {{ album.title }}
+                            </h3>
+                            {% if album.description %}
+                            <p class="text-body line-clamp-2 mb-3">{{ album.description }}</p>
+                            {% endif %}
+                            <div class="flex items-center justify-between text-caption">
+                                <span>{{ album.photo_count }} 张照片</span>
+                                <span class="text-yaqing/40">{{ album.created_at|date:"Y.m.d" }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-20">
+                <p class="text-yaqing/60">暂无影集</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
