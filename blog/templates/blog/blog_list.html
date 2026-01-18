@@ -3,12 +3,12 @@
 {% block content %}
 <div class="min-h-screen bg-paper">
     <!-- Header -->
-    <section class="py-16 px-6 border-b border-yaqing/10">
+    <section class="py-12 md:py-16 px-4 md:px-6 border-b border-yaqing/10">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-display text-center mb-8">文章</h1>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl text-center mb-6 md:mb-8 font-serif">文章</h1>
 
             <!-- Filters -->
-            <div class="flex flex-wrap justify-center gap-3">
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3">
                 <a href="{% url 'blog:list' %}" class="tag-song {% if not current_category and not current_tag %}border-hupo text-hupo{% endif %}">
                     全部
                 </a>
@@ -21,10 +21,10 @@
             </div>
 
             {% if tags %}
-            <div class="flex flex-wrap justify-center gap-3 mt-4">
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3 mt-3 md:mt-4">
                 {% for tag in tags %}
                 <a href="?tag={{ tag.slug }}"
-                   class="tag-song text-sm {% if current_tag == tag.slug %}border-hupo text-hupo{% endif %}">
+                   class="tag-song text-xs md:text-sm {% if current_tag == tag.slug %}border-hupo text-hupo{% endif %}">
                     #{{ tag.name }}
                 </a>
                 {% endfor %}
@@ -34,7 +34,7 @@
     </section>
 
     <!-- Posts Grid -->
-    <section class="py-16 px-6">
+    <section class="py-12 md:py-16 px-4 md:px-6">
         <div class="max-w-7xl mx-auto">
             {% if posts %}
             <div class="grid-song">
@@ -53,21 +53,21 @@
                             <span class="text-yaqing/40 text-4xl">墨</span>
                         </div>
                         {% endif %}
-                        <div class="p-6">
-                            <div class="flex items-center gap-3 mb-3">
+                        <div class="p-4 md:p-6">
+                            <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
                                 {% if post.category %}
-                                <span class="text-caption text-hupo">{{ post.category.name }}</span>
+                                <span class="text-xs md:text-sm text-hupo">{{ post.category.name }}</span>
                                 {% endif %}
-                                <span class="text-caption text-yaqing/40">{{ post.created_at|date:"Y.m.d" }}</span>
+                                <span class="text-xs md:text-sm text-yaqing/40">{{ post.created_at|date:"Y.m.d" }}</span>
                             </div>
-                            <h3 class="text-xl font-serif text-yaqing mb-3 group-hover:text-hupo transition-colors">
+                            <h3 class="text-base md:text-xl font-serif text-yaqing mb-2 md:mb-3 group-hover:text-hupo transition-colors">
                                 {{ post.title }}
                             </h3>
                             {% if post.excerpt %}
-                            <p class="text-body line-clamp-2">{{ post.excerpt }}</p>
+                            <p class="text-sm md:text-base line-clamp-2">{{ post.excerpt }}</p>
                             {% endif %}
                             {% if post.tags.all %}
-                            <div class="flex flex-wrap gap-2 mt-4">
+                            <div class="flex flex-wrap gap-1 md:gap-2 mt-3 md:mt-4">
                                 {% for tag in post.tags.all %}
                                 <span class="text-xs text-yaqing/50">#{{ tag.name }}</span>
                                 {% endfor %}
@@ -79,7 +79,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <div class="text-center py-20">
+            <div class="text-center py-16 md:py-20">
                 <p class="text-yaqing/60">暂无文章</p>
             </div>
             {% endif %}

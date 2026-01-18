@@ -4,7 +4,7 @@
 <article class="min-h-screen bg-yuebai">
     <!-- Hero Image -->
     {% if post.cover_image %}
-    <div class="relative h-[60vh] overflow-hidden">
+    <div class="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img src="{{ post.cover_image.url }}"
              alt="{{ post.title }}"
              class="w-full h-full object-cover">
@@ -13,20 +13,20 @@
     {% endif %}
 
     <!-- Article Content -->
-    <div class="max-w-4xl mx-auto px-6 {% if post.cover_image %}-mt-32{% endif %} relative z-10">
-        <div class="card-song p-8 md:p-12">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 {% if post.cover_image %}-mt-20 md:-mt-32{% endif %} relative z-10">
+        <div class="card-song p-6 md:p-8 lg:p-12">
             <!-- Header -->
-            <header class="mb-8">
-                <div class="flex items-center gap-3 mb-4">
+            <header class="mb-6 md:mb-8">
+                <div class="flex flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
                     {% if post.category %}
-                    <a href="?category={{ post.category.slug }}" class="tag-song">{{ post.category.name }}</a>
+                    <a href="?category={{ post.category.slug }}" class="tag-song text-xs md:text-sm">{{ post.category.name }}</a>
                     {% endif %}
                     {% if post.is_photography %}
-                    <span class="tag-song border-zhusha text-zhusha">摄影作品</span>
+                    <span class="tag-song border-zhusha text-zhusha text-xs md:text-sm">摄影作品</span>
                     {% endif %}
                 </div>
-                <h1 class="text-display mb-4">{{ post.title }}</h1>
-                <div class="flex items-center gap-4 text-caption text-yaqing/60">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 font-serif leading-tight">{{ post.title }}</h1>
+                <div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-yaqing/60">
                     <span>{{ post.created_at|date:"Y年m月d日" }}</span>
                     <span>阅读 {{ post.view_count }}</span>
                 </div>
@@ -34,15 +34,15 @@
 
             <!-- Tags -->
             {% if post.tags.all %}
-            <div class="flex flex-wrap gap-2 mb-8 pb-8 border-b border-yaqing/10">
+            <div class="flex flex-wrap gap-2 mb-6 md:mb-8 pb-6 md:pb-8 border-b border-yaqing/10">
                 {% for tag in post.tags.all %}
-                <a href="?tag={{ tag.slug }}" class="tag-song">#{{ tag.name }}</a>
+                <a href="?tag={{ tag.slug }}" class="tag-song text-xs md:text-sm">#{{ tag.name }}</a>
                 {% endfor %}
             </div>
             {% endif %}
 
             <!-- Content -->
-            <div class="prose prose-lg max-w-none prose-headings:font-serif prose-p:text-yaqing/80 prose-p:leading-relaxed">
+            <div class="prose prose-sm md:prose-lg max-w-none prose-headings:font-serif prose-p:text-yaqing/80 prose-p:leading-relaxed">
                 {{ post.content|linebreaks }}
             </div>
         </div>
@@ -50,10 +50,10 @@
 
     <!-- Related Posts -->
     {% if related_posts %}
-    <section class="py-16 px-6 bg-paper">
+    <section class="py-12 md:py-16 px-4 md:px-6 bg-paper">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-heading text-center mb-12">相关文章</h2>
-            <div class="grid md:grid-cols-3 gap-8">
+            <h2 class="text-xl md:text-2xl lg:text-3xl text-center mb-8 md:mb-12 font-serif">相关文章</h2>
+            <div class="grid md:grid-cols-3 gap-4 md:gap-8">
                 {% for related in related_posts %}
                 <a href="{{ related.get_absolute_url }}" class="card-song overflow-hidden group">
                     {% if related.cover_image %}
@@ -68,8 +68,8 @@
                         <span class="text-yaqing/40 text-4xl">墨</span>
                     </div>
                     {% endif %}
-                    <div class="p-6">
-                        <h3 class="text-lg font-serif text-yaqing group-hover:text-hupo transition-colors">
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-base md:text-lg font-serif text-yaqing group-hover:text-hupo transition-colors">
                             {{ related.title }}
                         </h3>
                     </div>

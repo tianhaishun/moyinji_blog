@@ -3,22 +3,22 @@
 {% block content %}
 <div class="min-h-screen bg-yuebai" x-data="lightbox()">
     <!-- Header -->
-    <section class="py-16 px-6 border-b border-yaqing/10">
+    <section class="py-12 md:py-16 px-4 md:px-6 border-b border-yaqing/10">
         <div class="max-w-7xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-                <a href="{% url 'gallery:list' %}" class="text-yaqing/60 hover:text-yaqing transition-colors">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <a href="{% url 'gallery:list' %}" class="text-yaqing/60 hover:text-yaqing transition-colors text-sm md:text-base">
                     ← 返回影集
                 </a>
             </div>
-            <h1 class="text-display mb-4">{{ album.title }}</h1>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 font-serif">{{ album.title }}</h1>
             {% if album.description %}
-            <p class="text-body max-w-2xl">{{ album.description }}</p>
+            <p class="text-sm md:text-base max-w-2xl">{{ album.description }}</p>
             {% endif %}
         </div>
     </section>
 
     <!-- Photos Grid -->
-    <section class="py-16 px-6">
+    <section class="py-12 md:py-16 px-4 md:px-6">
         <div class="max-w-7xl mx-auto">
             {% if photos %}
             <div class="masonry-song">
@@ -43,17 +43,17 @@
                         <span class="text-yaqing/40 text-4xl">影</span>
                     </div>
                     {% endif %}
-                    <div class="p-4">
-                        <h3 class="font-serif text-yaqing">{{ photo.title }}</h3>
+                    <div class="p-3 md:p-4">
+                        <h3 class="text-sm md:text-base font-serif text-yaqing">{{ photo.title }}</h3>
                         {% if photo.location %}
-                        <p class="text-caption mt-1">📍 {{ photo.location }}</p>
+                        <p class="text-xs md:text-sm mt-1">📍 {{ photo.location }}</p>
                         {% endif %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
             {% else %}
-            <div class="text-center py-20">
+            <div class="text-center py-16 md:py-20">
                 <p class="text-yaqing/60">此相册暂无照片</p>
             </div>
             {% endif %}
@@ -68,51 +68,65 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-50 bg-yaqing/95 backdrop-blur-sm flex items-center justify-center"
+         class="fixed inset-0 z-50 bg-yaqing/95 backdrop-blur-sm flex items-center justify-center lightbox-mobile"
          @click.self="close()"
          @keydown.window.escape="close()"
          @keydown.window.arrowright="next()"
          @keydown.window.arrowleft="prev()"
+         @touchstart="touchStart($event)"
+         @touchmove="touchMove($event)"
+         @touchend="touchEnd($event)"
          x-cloak>
         <div class="relative w-full h-full flex flex-col">
             <!-- Close Button -->
-            <button @click="close()" class="absolute top-4 right-4 z-10 text-white hover:text-hupo transition-colors">
+            <button @click="close()"
+                    class="absolute top-4 right-4 z-10 text-white hover:text-hupo transition-colors lightbox-nav-button"
+                    style="min-width: 48px; min-height: 48px;">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
 
-            <!-- Image -->
-            <div class="flex-1 flex items-center justify-center p-4">
+            <!-- Image Container -->
+            <div class="flex-1 flex items-center justify-center p-2 md:p-4 overflow-hidden">
                 <img :src="currentPhoto?.full"
                      :alt="currentPhoto?.title"
-                     class="max-w-full max-h-full object-contain">
+                     class="max-w-full max-h-full object-contain select-none">
             </div>
 
             <!-- Info Panel -->
-            <div class="bg-yaqing text-yuebai p-6">
+            <div class="bg-yaqing text-yuebai p-4 md:p-6">
                 <div class="max-w-4xl mx-auto">
-                    <h3 class="text-xl font-serif mb-2" x-text="currentPhoto?.title"></h3>
-                    <p class="text-sm opacity-70 mb-4" x-text="currentPhoto?.exif" x-show="currentPhoto?.exif"></p>
-                    <p class="text-sm opacity-80" x-text="currentPhoto?.description" x-show="currentPhoto?.description"></p>
+                    <h3 class="text-lg md:text-xl font-serif mb-2" x-text="currentPhoto?.title"></h3>
+                    <p class="text-xs md:text-sm opacity-70 mb-3" x-show="currentPhoto?.exif" x-text="currentPhoto?.exif"></p>
+                    <p class="text-sm md:text-sm opacity-80" x-show="currentPhoto?.description" x-text="currentPhoto?.description"></p>
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navigation Buttons -->
             <button @click.stop="prev()"
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-hupo transition-colors"
-                    x-show="photos.length > 1">
-                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white hover:text-hupo transition-colors lightbox-nav-button"
+                    x-show="photos.length > 1"
+                    style="min-width: 48px; min-height: 48px;">
+                <svg class="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
             <button @click.stop="next()"
-                    class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-hupo transition-colors"
-                    x-show="photos.length > 1">
-                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:text-hupo transition-colors lightbox-nav-button"
+                    x-show="photos.length > 1"
+                    style="min-width: 48px; min-height: 48px;">
+                <svg class="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </button>
+
+            <!-- Swipe Indicator (shown briefly on touch devices) -->
+            <div x-show="showSwipeHint"
+                 x-transition.opacity
+                 class="absolute bottom-20 left-1/2 -translate-x-1/2 text-white/60 text-sm pointer-events-none">
+                滑动切换照片
+            </div>
         </div>
     </div>
 </div>
@@ -125,6 +139,11 @@ function lightbox() {
         isOpen: false,
         currentIndex: 0,
         photos: [],
+        touchStartX: 0,
+        touchEndX: 0,
+        touchStartY: 0,
+        touchEndY: 0,
+        showSwipeHint: false,
 
         init() {
             // Collect all photo data
@@ -136,6 +155,18 @@ function lightbox() {
                 exif: el.dataset.exif,
                 location: el.dataset.location
             }));
+
+            // Show swipe hint on touch devices
+            if ('ontouchstart' in window) {
+                setTimeout(() => {
+                    if (this.isOpen) {
+                        this.showSwipeHint = true;
+                        setTimeout(() => {
+                            this.showSwipeHint = false;
+                        }, 2000);
+                    }
+                }, 500);
+            }
         },
 
         get currentPhoto() {
@@ -146,11 +177,22 @@ function lightbox() {
             this.currentIndex = index;
             this.isOpen = true;
             document.body.style.overflow = 'hidden';
+
+            // Show swipe hint on touch devices
+            if ('ontouchstart' in window) {
+                setTimeout(() => {
+                    this.showSwipeHint = true;
+                    setTimeout(() => {
+                        this.showSwipeHint = false;
+                    }, 2000);
+                }, 500);
+            }
         },
 
         close() {
             this.isOpen = false;
             document.body.style.overflow = '';
+            this.showSwipeHint = false;
         },
 
         next() {
@@ -159,6 +201,40 @@ function lightbox() {
 
         prev() {
             this.currentIndex = (this.currentIndex - 1 + this.photos.length) % this.photos.length;
+        },
+
+        // Touch event handlers
+        touchStart(event) {
+            this.touchStartX = event.changedTouches[0].screenX;
+            this.touchStartY = event.changedTouches[0].screenY;
+        },
+
+        touchMove(event) {
+            // Prevent scrolling while swiping in lightbox
+            event.preventDefault();
+        },
+
+        touchEnd(event) {
+            this.touchEndX = event.changedTouches[0].screenX;
+            this.touchEndY = event.changedTouches[0].screenY;
+            this.handleSwipe();
+        },
+
+        handleSwipe() {
+            const deltaX = this.touchEndX - this.touchStartX;
+            const deltaY = this.touchEndY - this.touchStartY;
+            const minSwipeDistance = 50;
+
+            // Only trigger swipe if horizontal movement is greater than vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > minSwipeDistance) {
+                    // Swipe right -> previous
+                    this.prev();
+                } else if (deltaX < -minSwipeDistance) {
+                    // Swipe left -> next
+                    this.next();
+                }
+            }
         }
     };
 }

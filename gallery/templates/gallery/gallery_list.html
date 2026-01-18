@@ -3,15 +3,15 @@
 {% block content %}
 <div class="min-h-screen bg-yuebai">
     <!-- Header -->
-    <section class="py-16 px-6 border-b border-yaqing/10">
+    <section class="py-12 md:py-16 px-4 md:px-6 border-b border-yaqing/10">
         <div class="max-w-7xl mx-auto text-center">
-            <h1 class="text-display mb-6">影集</h1>
-            <p class="text-body max-w-2xl mx-auto">用镜头记录时光，以光影描绘心境</p>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 font-serif">影集</h1>
+            <p class="text-base md:text-lg max-w-2xl mx-auto">用镜头记录时光，以光影描绘心境</p>
         </div>
     </section>
 
     <!-- Albums Grid -->
-    <section class="py-16 px-6">
+    <section class="py-12 md:py-16 px-4 md:px-6">
         <div class="max-w-7xl mx-auto">
             {% if albums %}
             <div class="masonry-song">
@@ -31,14 +31,14 @@
                             {% endif %}
                             <div class="absolute inset-0 bg-gradient-to-t from-yaqing/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-serif text-yaqing mb-2 group-hover:text-hupo transition-colors">
+                        <div class="p-4 md:p-6">
+                            <h3 class="text-base md:text-xl font-serif text-yaqing mb-2 group-hover:text-hupo transition-colors">
                                 {{ album.title }}
                             </h3>
                             {% if album.description %}
-                            <p class="text-body line-clamp-2 mb-3">{{ album.description }}</p>
+                            <p class="text-sm md:text-base line-clamp-2 mb-2 md:mb-3">{{ album.description }}</p>
                             {% endif %}
-                            <div class="flex items-center justify-between text-caption">
+                            <div class="flex items-center justify-between text-xs md:text-sm">
                                 <span>{{ album.photo_count }} 张照片</span>
                                 <span class="text-yaqing/40">{{ album.created_at|date:"Y.m.d" }}</span>
                             </div>
@@ -48,7 +48,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <div class="text-center py-20">
+            <div class="text-center py-16 md:py-20">
                 <p class="text-yaqing/60">暂无影集</p>
             </div>
             {% endif %}

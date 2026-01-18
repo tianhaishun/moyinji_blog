@@ -251,3 +251,150 @@ html {
         @apply text-black;
     }
 }
+
+/* ===== Mobile Optimizations ===== */
+@media (max-width: 768px) {
+    /* Increase touch target sizes */
+    a,
+    button,
+    .tag-song {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Adjust text sizes for mobile */
+    .text-display {
+        @apply text-3xl;
+    }
+
+    .text-heading {
+        @apply text-xl;
+    }
+
+    /* Improve mobile spacing */
+    section {
+        @apply py-12 px-4;
+    }
+
+    /* Optimize cards for mobile */
+    .card-song {
+        @apply rounded-sm;
+    }
+
+    /* Better mobile button sizing */
+    .btn-song,
+    .btn-song-solid {
+        @apply w-full text-center py-3;
+    }
+
+    /* Mobile-safe tap targets for interactive elements */
+    .nav-link,
+    .tag-song {
+        @apply px-4 py-3;
+    }
+
+    /* Optimize images for mobile */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Improve readability on mobile */
+    .text-body {
+        @apply text-base leading-relaxed;
+    }
+}
+
+/* ===== Touch Device Optimizations ===== */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .card-song:hover {
+        transform: none;
+    }
+
+    .zoom-container:hover img {
+        transform: none;
+    }
+
+    /* Add active/pressed states for touch */
+    .card-song:active {
+        @apply bg-yaqing/50;
+    }
+
+    .btn-song:active,
+    .btn-song-solid:active {
+        transform: scale(0.98);
+    }
+
+    /* Improve tap feedback */
+    a:active,
+    button:active {
+        @apply bg-yaqing/30;
+    }
+}
+
+/* ===== Mobile Lightbox Optimizations ===== */
+@media (max-width: 768px) {
+    /* Full-screen lightbox on mobile */
+    .lightbox-mobile {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+    }
+
+    /* Larger navigation buttons for touch */
+    .lightbox-nav-button {
+        @apply w-16 h-16 flex items-center justify-center;
+        min-width: 64px;
+        min-height: 64px;
+    }
+}
+
+/* ===== Safe Area Support for Notched Devices ===== */
+@supports (padding: max(0px)) {
+    nav {
+        padding-top: max(1rem, env(safe-area-inset-top));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .lightbox-mobile {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* ===== Reduced Motion Support ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== Mobile Text Selection ===== */
+@media (max-width: 768px) {
+    ::selection {
+        background: rgba(183, 139, 93, 0.3);
+    }
+}
+
+/* ===== Mobile Performance ===== */
+@media (max-width: 768px) {
+    /* Reduce shadows on mobile for better performance */
+    .card-song {
+        box-shadow: 0 1px 2px rgba(60, 72, 86, 0.05);
+    }
+
+    /* Optimize animations */
+    .animate-unfurl {
+        animation: unfurl 0.3s ease-out;
+    }
+}
